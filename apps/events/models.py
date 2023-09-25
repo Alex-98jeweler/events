@@ -1,3 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Event(models.Model):
+    
+    title = models.CharField('Название', max_length=50, unique=True)
+    description = models.CharField('Описание')
+    created_at = models.DateTimeField('Дата создания', auto_now_add=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class EventFollower(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    follower = models.ForeignKey()
