@@ -14,3 +14,25 @@ class RegisterAPIView(views.APIView):
             serializer.instance = services.create_user(user_dc=data)
             return response.Response(data=serializer.data)
         return response.Response(serializer.error_messages)
+
+
+class LoginAPIView(views.APIView):
+    
+    def post(self, request: Request):
+        username = request.data['username']
+        password = request.data['password']
+        
+        user = services.user_username_selector(username)
+        
+        if user is None:
+            raise exceptions.AuthenticationFailed("Invalid credentials")
+        if not user.check_password(password):
+            raise exceptions.AuthenticationFailed("Invalid credentials")
+        
+        token = services.create_token(user_id=user.id)
+        
+        resp = response.Response()
+        resp.set_cookie('jwt', value=token, httponly=True)
+        
+        return resp
+            
