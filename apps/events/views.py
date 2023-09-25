@@ -14,7 +14,7 @@ class ListCreateEventAPIView(generics.ListCreateAPIView):
 
 class UpdateEventAPIView(generics.RetrieveUpdateAPIView):
     
-    serializer_class = serializers.EventSerializers
+    serializer_class = serializers.BaseEventSerializer
     
     def get_queryset(self):
         return models.Event.objects.all()
@@ -22,7 +22,7 @@ class UpdateEventAPIView(generics.RetrieveUpdateAPIView):
     
 class DestroyEventAPIView(generics.RetrieveDestroyAPIView):
     
-    serializer_class = serializers.EventSerializers
+    serializer_class = serializers.BaseEventSerializer
     
     def get_queryset(self):
         return models.Event.objects.all()
