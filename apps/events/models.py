@@ -12,4 +12,4 @@ class Event(models.Model):
 
 class EventFollower(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    follower = models.ForeignKey()
+    follower = models.ForeignKey(User, models.SET_NULL, null=True)
