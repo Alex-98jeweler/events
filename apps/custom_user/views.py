@@ -44,4 +44,14 @@ class UsersMeAPiView(views.APIView):
         user = request.user
         serializer = serializers.UserSerializer(user)
         return response.Response(data=serializer.data)
-            
+
+
+class LogoutAPIView(views.APIView):
+    authentication_classes = (backends.JWTAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        resp = response.Response()
+        resp.delete_cookie("jwt")
+        resp.data = {"message": "so long farewell"}
+        return resp
