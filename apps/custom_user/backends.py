@@ -17,3 +17,17 @@ class JWTAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed("Unathorized")
         user = models.User.objects.get(id=payload['id'])
         return (user, None)
+
+
+class JWTHeaderAuthentication(authentication.BaseAuthentication):
+    
+    def authenticate(self, request: HttpRequest):
+        token = request.headers.get("Authorization").split()[1]
+        if not token:
+            return None
+        try:
+            payload = jwt.decode(token, settings.JWT_SECRET, algorithms=['HS256'])
+        except:
+            raise exceptions.AuthenticationFailed("Unathorized")
+        user = models.User.objects.get(id=payload['id'])
+        return (user, None)
