@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     
     'apps.events',
+    'apps.custom_user'
 ]
 
 MIDDLEWARE = [
@@ -126,4 +127,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'apps.custom_user.User'
+AUTH_USER_MODEL = 'custom_user.User'
