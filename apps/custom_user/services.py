@@ -4,10 +4,7 @@ import jwt
 from typing import TYPE_CHECKING
 from django.conf import settings
 
-from . import models
-
-if TYPE_CHECKING:
-    from .models import User
+from .models import User
 
 
 @dataclasses.dataclass
@@ -28,7 +25,7 @@ class UserDataClass:
         )
         
 def create_user(user_dc: UserDataClass) -> UserDataClass:
-    obj = models.User(
+    obj = User(
         first_name=user_dc.first_name,
         last_name=user_dc.last_name,
         username=user_dc.username
@@ -39,7 +36,7 @@ def create_user(user_dc: UserDataClass) -> UserDataClass:
     return UserDataClass.from_instance(obj)
 
 def user_username_selector(username: str) -> User:
-    user = models.User.objects.get(username=username)
+    user = User.objects.get(username=username)
     return user
 
 def create_token(user_id: int) -> str:
