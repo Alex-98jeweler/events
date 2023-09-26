@@ -1,15 +1,14 @@
 from typing import Any
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, ListView
 
 from ..custom_user.models import User
 from ..custom_user.forms import UserCreationForm
-
+from ..events.models import Event, EventFollower
 
 
 class DashboardView(LoginRequiredMixin, View):
@@ -38,6 +37,15 @@ class RegistrationView(CreateView):
     model = User
     form_class = UserCreationForm
     template_name = 'simple_admin/registration.html'
+    
+
+class EventListView(ListView):
+    template_name = 'simple_admin/events-list.html'
+    model = Event
+    
+    def get_context_data(self, **kwargs: Any):
+        events = self.model.objects.all()
+        return {"events": events}
     
 
     
