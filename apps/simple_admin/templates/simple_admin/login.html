@@ -9,9 +9,9 @@
     <form method="post">
         {% csrf_token %}
         <label >Логин</label>
-        <input type="text" />
+        <input type="text" name="username"/>
         <label >Пароль</label>
-        <input type="text" />
+        <input type="password" name="password"/>
         <button type="submit">Войти</button>
     </form>
 </body>
