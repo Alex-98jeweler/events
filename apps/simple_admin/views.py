@@ -16,7 +16,8 @@ class DashboardView(LoginRequiredMixin, View):
     login_url = "/login/"
     
     def get(self, request, *args, **kwargs):
-        return render(request, template_name='simple_admin/dashboard.html')
+        user = request.user
+        return render(request, template_name='simple_admin/index.html', context={'user': user})
 
 
 class LoginView(LoginView):
@@ -37,5 +38,7 @@ class RegistrationView(CreateView):
     model = User
     form_class = UserCreationForm
     template_name = 'simple_admin/registration.html'
+    
+
     
    
