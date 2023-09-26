@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'djoser',
     
     'apps.events',
-    'apps.custom_user'
+    'apps.custom_user',
+    'apps.simple_admin',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'event.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
