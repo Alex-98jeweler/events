@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 
 from ..custom_user.models import User
-from ..custom_user.forms import CustomUserCreationForm
+from ..custom_user.forms import UserCreationForm
 
 
 
@@ -33,18 +33,9 @@ def logout_view(request):
     return redirect("/login/")
     
 
-class RegistrationView(View):
+class RegistrationView(CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'simple_admin/registration.html'
     
-    def post(self, request, *args, **kwargs):
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            print(user)
-            return redirect('/login/')
-        else:
-            return render(request, 'simple_admin/registration.html', context={'form': form}, status=400)
-    
-    def get(self, request, *args, **kwargs):
-        form = CustomUserCreationForm()
-        return render(request, 'simple_admin/registration.html', context={'form': form})
    
