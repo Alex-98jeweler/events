@@ -42,7 +42,7 @@ def user_username_selector(username: str) -> User:
 def create_token(user_id: int) -> str:
     payload = dict(
         id=user_id,
-        exp=datetime.datetime.utcnow() + datetime.timedelta(hours=24),
+        exp=datetime.datetime.utcnow() + datetime.timedelta(days=30),
         iat=datetime.datetime.utcnow()
     )
     token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")

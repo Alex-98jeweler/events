@@ -32,12 +32,12 @@ class LoginAPIView(views.APIView):
         token = services.create_token(user_id=user.id)
         
         resp = response.Response()
-        resp.set_cookie('jwt', value=token, httponly=True)
+        resp.data = {"access_token": token}
         
         return resp
     
 class UsersMeAPiView(views.APIView):
-    authentication_classes = [backends.JWTAuthentication, ]
+    authentication_classes = [backends.JWTHeaderAuthentication, ]
     permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request: Request):
