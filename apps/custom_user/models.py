@@ -51,7 +51,7 @@ class User(AbstractUser):
     username = models.CharField("Логин", max_length=32, unique=True)
     first_name = models.CharField("Имя", max_length=32)
     last_name = models.CharField("Фамилия", max_length=32)
-    password = models.CharField(max_length=255)
+    password = models.CharField("Пароль", max_length=255)
     birthday = models.DateField("Дата Рождения", null=True)
     email=None
     
