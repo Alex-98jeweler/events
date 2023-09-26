@@ -5,6 +5,10 @@ from django.views import View
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView
+
+from ..custom_user.models import User
+from ..custom_user.forms import CustomUserCreationForm
 
 
 
@@ -30,7 +34,17 @@ def logout_view(request):
     
 
 class RegistrationView(View):
-    pass
-
-
-
+    
+    def post(self, request, *args, **kwargs):
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            print(user)
+            return redirect('/login/')
+        else:
+            return render(request, 'simple_admin/registration.html', context={'form': form}, status=400)
+    
+    def get(self, request, *args, **kwargs):
+        form = CustomUserCreationForm()
+        return render(request, 'simple_admin/registration.html', context={'form': form})
+   
