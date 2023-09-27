@@ -13,6 +13,5 @@ class BaseEventSerializer(serializers.ModelSerializer):
         }
 
 class EventSerializers(BaseEventSerializer):
-    pass
-    # creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
         
