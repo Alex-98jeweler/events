@@ -1,5 +1,6 @@
 from typing import Any
 from django.db import models
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import logout
@@ -48,6 +49,18 @@ class EventListView(ListView, LoginRequiredMixin):
         events = self.model.objects.all()
         return {"events": events}
     
+
+class MyEventsList(ListView, LoginRequiredMixin):
+    template_name = 'simple_admin/my-events.html'
+    model = Event
+    
+    def get_context_data(self, **kwargs: Any):
+        user = self.request.user
+        follower_events = EventFollower.objects.filter(follower=user)
+        events = [follower_event.event for follower_event in follower_events]
+        return {'events': events}
+        
+    
 class EventDetalView(DetailView, LoginRequiredMixin):
     
     template_name='simple_admin/events-detail.html'
@@ -72,7 +85,7 @@ def event_follow(request, *args, **kwargs):
     return redirect(f'/events/{pk}/')
 
 
-class FollowerDetailView(DetailView):
+class FollowerDetailView(DetailView, LoginRequiredMixin):
     template_name = 'simple_admin/follower-detail.html'
     model = User
     
