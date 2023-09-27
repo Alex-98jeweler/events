@@ -6,19 +6,16 @@ class JSONResponseRenderer(JSONRenderer):
     charset = 'utf-8'
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
-        errors = {}
-        print(data)
-        if 'detail' in data:
-            errors['detail'] = data['detail']
-            del data['detail']
-        if 'code' in data:
-            errors['code'] = data['code']
-            del data['code']
-        if isinstance(data, dict) and (error := data.get('errors')):
-            errors['errors_detailed'] = error
-            del data['errors']
-        response_dict = {
-            'result': data if data else {},
-            'error': errors,
-        }
+        if "response" in renderer_context:
+            response = renderer_context['response']
+            if 400 <= response.status_code < 500:
+                response_dict = {
+                    "errors" : data,
+                    "result": []
+                }
+            elif 200 <= response.status_code < 300:
+                response_dict = {
+                    "errors": None,
+                    "result": data,
+                }
         return json.dumps(response_dict)
