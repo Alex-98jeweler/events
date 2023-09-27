@@ -20,3 +20,4 @@ class UserSerializer(serializers.Serializer):
         extra_kwargs = {
             'birthday': {"required": False}
         }
+        ref_name = 'User 2'

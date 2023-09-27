@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
+    'drf_yasg',
     
     'apps.events',
     'apps.custom_user',
