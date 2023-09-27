@@ -1,5 +1,6 @@
 from django.urls import re_path
 from rest_framework import permissions
+from rest_framework_simplejwt import authentication
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -15,5 +16,6 @@ schema_view = get_schema_view(
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
+   authentication_classes=[authentication.JWTAuthentication]
 )
 
