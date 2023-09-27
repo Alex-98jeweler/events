@@ -13,3 +13,6 @@ class Event(models.Model):
 class EventFollower(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     follower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    
+    class Meta:
+        unique_together = [['event', 'follower'], ]
