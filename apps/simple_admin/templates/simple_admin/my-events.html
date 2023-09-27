@@ -11,6 +11,8 @@
         {% for event in events %}
             <li><a href="/events/{{ event.pk}}/">{{ event.title }}</a></li>
         {% endfor %}
+        <p><a href="/dashboard/">На главную</a></p>
+        <p><a href="/logout/">Выйти</a></p>
     </ul>
 </body>
 </html>
