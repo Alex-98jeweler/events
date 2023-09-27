@@ -55,14 +55,18 @@ class EventDetalView(DetailView, LoginRequiredMixin):
     
     def get_context_data(self, **kwargs: Any):
         event = self.get_object()
-        followers = EventFollower.objects.filter(event=event)
-        followers = [follower.follower for follower in followers]
-        return {'event': event, 'followers': followers}
+        user = self.request.user
+        eventfollowers = EventFollower.objects.filter(event=event)
+        followers = [eventfollower.follower for eventfollower in eventfollowers]
+        return {'event': event, 'followers': followers, 'curr_user': user}
 
 
 def event_follow(request, *args, **kwargs):
     pk = kwargs.get('pk')
     user = request.user
     event = Event.objects.get(pk=pk)
-    EventFollower.objects.create(event=event, follower=user)
+    try:
+        EventFollower.objects.create(event=event, follower=user)
+    except:
+        pass
     return redirect(f'/events/{pk}/')
