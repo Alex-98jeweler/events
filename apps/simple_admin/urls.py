@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('registration/', views.RegistrationView.as_view()),
     path('events/', views.EventListView.as_view(), name='event-list'),
-    path('events/<int:pk>/', views.EventDetalView.as_view(), name='event-detail')
+    path('events/<int:pk>/', views.EventDetalView.as_view(), name='event-detail'),
+    path('events/<int:pk>/follow/', views.event_follow, name='event-detail')
     
 ]
