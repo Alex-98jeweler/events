@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Название</h1>
+    <p>{{event.title}}</p>
+    <h1>Описание</h1>
+    <p>{{event.description}}</p>
+    <h1>Участники</h1>
+    <ul>
+        {% for follower in followers %}
+            <li><a href="/follower/{{follower.pk}}/">{{follower.first_name}} {{follower.last_name}}</a></li>
+        {% endfor %}
+    </ul>
+    <p><a href="/events/{{event.pk}}/follow/">Подписаться</a></p>
+    <p><a href="/events/">Назад к списку</a></p>
+    <p><a href="/dashboard/">На главную</a></p>
+</body>
+</html>

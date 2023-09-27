@@ -1,4 +1,5 @@
 from typing import Any
+from django.db import models
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import logout
@@ -39,13 +40,24 @@ class RegistrationView(CreateView):
     template_name = 'simple_admin/registration.html'
     
 
-class EventListView(ListView):
+class EventListView(ListView, LoginRequiredMixin):
     template_name = 'simple_admin/events-list.html'
     model = Event
     
     def get_context_data(self, **kwargs: Any):
         events = self.model.objects.all()
         return {"events": events}
+    
+class EventDetalView(DetailView, LoginRequiredMixin):
+    
+    template_name='simple_admin/events-detail.html'
+    model = Event
+    
+    def get_context_data(self, **kwargs: Any):
+        event = self.get_object()
+        followers = EventFollower.objects.filter(event=event)
+        return {'event': event, 'followers': followers}
+    
     
 
     
