@@ -70,3 +70,13 @@ def event_follow(request, *args, **kwargs):
     except:
         pass
     return redirect(f'/events/{pk}/')
+
+
+class FollowerDetailView(DetailView):
+    template_name = 'simple_admin/follower-detail.html'
+    model = User
+    
+    def get_context_data(self, **kwargs: Any):
+        back_event_pk = self.request.GET.get("back_to_event")
+        user = self.get_object()
+        return {'user': user, 'event_pk': back_event_pk}
