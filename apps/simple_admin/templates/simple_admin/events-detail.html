@@ -11,13 +11,12 @@
     <h1>Описание</h1>
     <p>{{event.description}}</p>
     <h1>Участники</h1>
-    {{followers}}
     <ul>
         {% for follower in followers %}
             <li><a href="/follower/{{follower.pk}}/">{{follower.first_name}} {{follower.last_name}}</a></li>
         {% endfor %}
     </ul>
-    <p><a href="/events/{{event.pk}}/follow/">Подписаться</a></p>
+    {% if curr_user not in followers or event.creator == curr_user%}<p><a href="/events/{{event.pk}}/follow/">Подписаться</a></p>{%endif%}
     <p><a href="/events/">Назад к списку</a></p>
     <p><a href="/dashboard/">На главную</a></p>
 </body>
