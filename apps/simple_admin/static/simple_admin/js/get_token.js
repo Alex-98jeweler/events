@@ -29,6 +29,8 @@ form.addEventListener('submit', async (e) => {
     })
     var result = await response.json();
     var token = result.result.access
+    var refresh = result.result.refresh
     localStorage.setItem('jwt_token', token)
+    localStorage.setItem('refresh', refresh)
     form.submit();
 })

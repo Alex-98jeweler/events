@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Все события</h1>
-    <ul>
+    <ul id="events-list">
         {% for event in events %}
             <li><a href="/events/{{ event.pk}}/">{{ event.title }}</a></li>
         {% endfor %}
@@ -16,5 +16,8 @@
     <p><a href="/dashboard/">На главную</a></p>
     <p><a href="/logout/">Выйти</a></p>
     <script src="{% static 'simple_admin/js/update_list.js'%}"></script>
+    <script>
+        setInterval(update_list, 10000, "events-list", "events")
+    </script>
 </body>
 </html>
