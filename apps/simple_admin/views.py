@@ -1,6 +1,7 @@
 from typing import Any
 from django.db import models
 from django.db.models.query import QuerySet
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import logout
@@ -12,6 +13,11 @@ from ..custom_user.models import User
 from ..custom_user.forms import UserCreationForm
 from ..events.models import Event, EventFollower
 
+def index(request):
+    if not request.user.is_authenticated:
+        return redirect('/login/')
+    return redirect('/dashboard/')
+        
 
 class DashboardView(LoginRequiredMixin, View):
     login_url = "/login/"
@@ -39,7 +45,7 @@ class RegistrationView(CreateView):
     model = User
     form_class = UserCreationForm
     template_name = 'simple_admin/registration.html'
-    
+    success_url = '/login/'
 
 class EventListView(ListView, LoginRequiredMixin):
     template_name = 'simple_admin/events-list.html'
