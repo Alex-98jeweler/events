@@ -11,7 +11,7 @@
     <h1>Описание</h1>
     <p>{{event.description}}</p>
     <h1>Участники</h1>
-    <ul>
+    <ul class="events">
         {% for follower in followers %}
             <li>
                 <a href="/followers/{{follower.pk}}/?back_to_event={{event.pk}}">
@@ -20,8 +20,10 @@
             </li>
         {% endfor %}
     </ul>
-    {% if curr_user not in followers or event.creator == curr_user%}
+    {% if curr_user not in followers%}
     <p><a href="/events/{{event.pk}}/follow/">Подписаться</a></p>
+    {% else %}
+    <p><a href="/events/{{event.pk}}/unfollow/">Отписаться</a></p>
     {%endif%}
     <p><a href="/events/">Назад к списку</a></p>
     <p><a href="/dashboard/">На главную</a></p>

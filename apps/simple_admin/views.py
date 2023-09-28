@@ -90,6 +90,18 @@ def event_follow(request, *args, **kwargs):
         pass
     return redirect(f'/events/{pk}/')
 
+def event_unfollow(request, *args, **kwargs):
+    event_id = kwargs.get('pk')
+    user = request.user
+    event = Event.objects.get(pk=event_id)
+    event_follower = EventFollower.objects.get(event=event, follower=user)
+    try:
+        event_follower.delete()
+    except:
+        pass
+    return redirect(f'/events/{event_id}/')
+    
+
 
 class FollowerDetailView(DetailView, LoginRequiredMixin):
     template_name = 'simple_admin/follower-detail.html'
