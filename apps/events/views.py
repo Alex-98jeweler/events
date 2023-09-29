@@ -51,8 +51,10 @@ def follow_event(request, *args, **kwargs):
     except IntegrityError as e:
         return Response(data={'message': "You are already followed"}, status=status.HTTP_400_BAD_REQUEST)
     return Response(data={'message': 'successfully followed'}, status=status.HTTP_200_OK)
-    
+
+
 @decorators.api_view(http_method_names=['POST', ])
+@decorators.authentication_classes([JWTAuthentication, SessionAuthentication])
 def unfollow_event(request, *args, **kwargs):
     event_id = kwargs.get('pk')
     user = request.user
@@ -63,3 +65,11 @@ def unfollow_event(request, *args, **kwargs):
     except Exception as e:
         return Response(data={'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
     return Response(data={'message': 'successfully followed'}, status=status.HTTP_200_OK)
+
+
+@decorators.api_view(('GET', ))
+def get_followers(request, *args, **kwargs):
+    event_id = kwargs.get('pk')
+    followers = models.EventFollower.objects.filter(event_id=event_id).values('follower')
+    return Response({"followers": list(followers)})
+
