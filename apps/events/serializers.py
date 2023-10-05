@@ -4,7 +4,7 @@ from . import models
 
 
 class BaseEventSerializer(serializers.ModelSerializer):
-    
+    followers = serializers.ListField()
     class Meta:
         model = models.Event
         fields = '__all__'
@@ -14,4 +14,4 @@ class BaseEventSerializer(serializers.ModelSerializer):
 
 class EventSerializers(BaseEventSerializer):
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
-        
+    followers = None
